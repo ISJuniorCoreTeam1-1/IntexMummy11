@@ -1,6 +1,7 @@
 using IntexMummy11.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -27,6 +28,15 @@ namespace IntexMummy11
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential 
+                // cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                // requires using Microsoft.AspNetCore.Http;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -52,6 +62,17 @@ namespace IntexMummy11
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            //Content Security Policy Header
+            app.Use(async (ctx, next) =>
+            {
+                string cspValue = "default-src 'self'; style-src 'self'; img-src 'self'; script-src 'self'";
+                ctx.Response.Headers.TryAdd("Content-Security-Policy", cspValue);
+                await next();
+            });
+
+
+            app.UseCookiePolicy();
 
             app.UseRouting();
 
