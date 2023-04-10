@@ -32,7 +32,6 @@ namespace IntexMummy11
 
             services.AddDbContext<PostgreSqlContext>(options => options.UseNpgsql(sqlConnectionString));
 
-            services.AddScoped<IDataAccessProvider, DataAccessProvider>();
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<PostgreSqlContext>();
             services.AddControllersWithViews();
