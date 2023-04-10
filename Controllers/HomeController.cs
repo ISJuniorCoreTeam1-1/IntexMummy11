@@ -28,6 +28,21 @@ namespace IntexMummy11.Controllers
             return View();
         }
 
+        public IActionResult BurialList()
+        {
+            return View();
+        }
+
+        public IActionResult BurialPredictions()
+        {
+            return View();
+        }
+
+        public IActionResult BurialInsights()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
