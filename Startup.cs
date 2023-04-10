@@ -1,4 +1,5 @@
-using IntexMummy11.Data;
+
+using IntexMummy11.DataAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,11 +28,13 @@ namespace IntexMummy11
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            var sqlConnectionString = Configuration["ConnectionString"];
+
+            services.AddDbContext<PostgreSqlContext>(options => options.UseNpgsql(sqlConnectionString));
+
+            services.AddScoped<IDataAccessProvider, DataAccessProvider>();
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<PostgreSqlContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
