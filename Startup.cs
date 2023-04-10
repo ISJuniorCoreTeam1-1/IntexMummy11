@@ -62,6 +62,16 @@ namespace IntexMummy11
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            //Content Security Policy Header
+            app.Use(async (ctx, next) =>
+            {
+                string cspValue = "default-src 'self'; style-src 'self'; img-src 'self'; script-src 'self'";
+                ctx.Response.Headers.TryAdd("Content-Security-Policy", cspValue);
+                await next();
+            });
+
+
             app.UseCookiePolicy();
 
             app.UseRouting();
