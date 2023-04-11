@@ -58,7 +58,7 @@ namespace IntexMummy11
                 options.SignIn.RequireConfirmedAccount = true;
             })
                 .AddErrorDescriber<CustomIdentityErrorDescriber>()
-                .AddEntityFrameworkStores<PostgreSqlContextt>();
+                .AddEntityFrameworkStores<PostgreSqlContext>();
                 
                 
             services.Configure<IdentityOptions>(options =>
