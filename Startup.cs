@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +15,12 @@ using PostgresCRUD.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using Amazon;
+using Amazon.SecretsManager;
+using Amazon.SecretsManager.Model;
+
 
 namespace IntexMummy11
 {
@@ -27,10 +33,17 @@ namespace IntexMummy11
 
         public IConfiguration Configuration { get; }
 
+        public static string OurSecrets { get; set; }
+        public static bool TimesUp { get; set; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var sqlConnectionString = Configuration["ConnectionString"];
+            GetSecret();
+            WaitForReturn();
+
+            var sqlConnectionString = Configuration["ConnectionString"] + OurSecrets;
+            //var sqlConnectionString = Configuration["ConnectionString"] + OurSecrets.Password;
 
             services.AddDbContext<PostgreSqlContext>(options => options.UseNpgsql(sqlConnectionString));
             services.Configure<CookiePolicyOptions>(options =>
@@ -42,9 +55,10 @@ namespace IntexMummy11
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            // Default sqlserver string
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseSqlServer(
+            //        Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<IdentityUser>(options =>
             {
@@ -59,8 +73,8 @@ namespace IntexMummy11
             })
                 .AddErrorDescriber<CustomIdentityErrorDescriber>()
                 .AddEntityFrameworkStores<PostgreSqlContext>();
-                
-                
+
+
             services.Configure<IdentityOptions>(options =>
             {
                 // Default SignIn settings.
@@ -114,5 +128,64 @@ namespace IntexMummy11
                 endpoints.MapRazorPages();
             });
         }
+
+        // This is used to query our serets, boom baby /////////////////////
+
+        static async Task GetSecret()
+        {
+            string secretName = "productiondatabase/credentials";
+            string region = "us-east-1";
+
+            IAmazonSecretsManager client = new AmazonSecretsManagerClient(RegionEndpoint.GetBySystemName(region));
+
+            GetSecretValueRequest request = new GetSecretValueRequest
+            {
+                SecretId = secretName,
+                VersionStage = "AWSCURRENT", // VersionStage defaults to AWSCURRENT if unspecified.
+            };
+
+            GetSecretValueResponse response;
+
+            try
+            {
+                response = await client.GetSecretValueAsync(request);
+            }
+            catch (Exception e)
+            {
+                // For a list of the exceptions thrown, see
+                // https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_GetSecretValue.html
+                throw e;
+            }
+
+            string secret = response.SecretString.Substring(35,33);
+
+            // Set our attribute equal to the response
+
+            TimesUp = false;
+            OurSecrets = secret;
+            TimesUp = true;
+
+        }
+
+
+        /// <summary>
+        /// I'm embaressed of this loop, please don't look
+        /// </summary>
+        public static void WaitForReturn()
+        {
+            if (TimesUp == false) 
+            {
+                for(int i=0; i<10000000; i++)
+                {
+                    //Wait a moment
+                }
+
+                WaitForReturn();
+            }
+            // Else move on
+  
+                 
+        }
+
     }
 }
