@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PostgresCRUD.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,9 @@ namespace IntexMummy11
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var sqlConnectionString = Configuration["ConnectionString"];
+
+            services.AddDbContext<PostgreSqlContext>(options => options.UseNpgsql(sqlConnectionString));
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential 
@@ -41,6 +45,7 @@ namespace IntexMummy11
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddDefaultIdentity<IdentityUser>(options =>
             {
                 //Password requirements
@@ -53,12 +58,15 @@ namespace IntexMummy11
                 options.SignIn.RequireConfirmedAccount = true;
             })
                 .AddErrorDescriber<CustomIdentityErrorDescriber>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<PostgreSqlContextt>();
+                
+                
             services.Configure<IdentityOptions>(options =>
             {
                 // Default SignIn settings.
                 options.SignIn.RequireConfirmedEmail = true;
             });
+
             services.AddControllersWithViews();
             services.AddRazorPages();
         }

@@ -9,26 +9,23 @@ using System.Threading.Tasks;
 
 namespace IntexMummy11.Controllers
 {
-    public class HomeController : Controller
+    public class DataController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
-        public IActionResult Index()
+        public IActionResult BurialList()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult BurialPredictions()
         {
             return View();
         }
 
-
+        public IActionResult BurialInsights()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
