@@ -39,8 +39,13 @@ namespace IntexMummy11
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IBurialRepository, EFBurialRepository>();
-            services.AddDbContext<PostgreSqlContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDbContext<ebdbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+
+            var sqlConnectionString = Configuration["ConnectionString"];
+            services.AddDbContext<PostgreSqlContext>(options => options.UseNpgsql(sqlConnectionString));
+            services.AddDbContext<ebdbContext>(options => options.UseNpgsql(sqlConnectionString));
+            
+            //services.AddDbContext<PostgreSqlContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<ebdbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential 
