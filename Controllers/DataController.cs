@@ -1,4 +1,5 @@
 ﻿using IntexMummy11.Models;
+using IntexMummy11.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -11,10 +12,23 @@ namespace IntexMummy11.Controllers
 {
     public class DataController : Controller
     {
+        private IBurialRepository repo;
+
+        public DataController(IBurialRepository temp)
+        {
+            repo = temp;
+        }
 
         public IActionResult BurialList()
         {
-            return View();
+            var x = new BurialViewModel
+            {
+                Burials = repo.Burials
+                /*.Where(b => b.Category == catergoryName || catergoryName == null)
+                .OrderBy(b => b.Title)
+                .Skip((pageNum - 1) * pageSize)*/
+            };
+            return View(x);
         }
 
         public IActionResult BurialPredictions()

@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -27,26 +26,21 @@ namespace IntexMummy11
 {
     public class Startup
     {
+
+        public IConfiguration Configuration { get; set; }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
-        public static string OurSecrets { get; set; }
-        public static bool TimesUp { get; set; }
+        
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            GetSecret();
-            WaitForReturn();
-
-            var sqlConnectionString = Configuration["ConnectionString"] + OurSecrets;
-            //var sqlConnectionString = Configuration["ConnectionString"] + OurSecrets.Password;
-
-            services.AddDbContext<PostgreSqlContext>(options => options.UseNpgsql(sqlConnectionString));
+            services.AddScoped<IBurialRepository, EFBurialRepository>();
+            services.AddDbContext<PostgreSqlContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ebdbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential 
@@ -55,11 +49,6 @@ namespace IntexMummy11
                 // requires using Microsoft.AspNetCore.Http;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
-            // Default sqlserver string
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseSqlServer(
-            //        Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<IdentityUser>(options =>
             {
@@ -84,6 +73,7 @@ namespace IntexMummy11
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -129,64 +119,5 @@ namespace IntexMummy11
                 endpoints.MapRazorPages();
             });
         }
-
-        // This is used to query our serets, boom baby /////////////////////
-
-        static async Task GetSecret()
-        {
-            string secretName = "productiondatabase/credentials";
-            string region = "us-east-1";
-
-            IAmazonSecretsManager client = new AmazonSecretsManagerClient(RegionEndpoint.GetBySystemName(region));
-
-            GetSecretValueRequest request = new GetSecretValueRequest
-            {
-                SecretId = secretName,
-                VersionStage = "AWSCURRENT", // VersionStage defaults to AWSCURRENT if unspecified.
-            };
-
-            GetSecretValueResponse response;
-
-            try
-            {
-                response = await client.GetSecretValueAsync(request);
-            }
-            catch (Exception e)
-            {
-                // For a list of the exceptions thrown, see
-                // https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_GetSecretValue.html
-                throw e;
-            }
-
-            string secret = response.SecretString.Substring(35,33);
-
-            // Set our attribute equal to the response
-
-            TimesUp = false;
-            OurSecrets = secret;
-            TimesUp = true;
-
-        }
-
-
-        /// <summary>
-        /// I'm embaressed of this loop, please don't look
-        /// </summary>
-        public static void WaitForReturn()
-        {
-            if (TimesUp == false) 
-            {
-                for(int i=0; i<10000000; i++)
-                {
-                    //Wait a moment
-                }
-
-                WaitForReturn();
-            }
-            // Else move on
-  
-                 
-        }
-
     }
 }
