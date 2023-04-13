@@ -38,7 +38,12 @@ namespace IntexMummy11.Controllers
 
         public IActionResult BurialInsights()
         {
-            return View();
+            var x = new MegatableViewModel
+            {
+                Data = repo.Data
+            };
+            
+            return View(x);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
