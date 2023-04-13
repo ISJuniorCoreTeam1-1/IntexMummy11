@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using PostgresCRUD.DataAccess;
 using System;
 using System.Collections.Generic;
+using Microsoft.ML.OnnxRuntime;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -77,9 +78,14 @@ namespace IntexMummy11
             });
 
             services.AddControllersWithViews();
+
             services.AddRazorPages();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<InferenceSession>(
+                new InferenceSession("./INTEXFINAL4.onnx")
+);
         }
+    
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

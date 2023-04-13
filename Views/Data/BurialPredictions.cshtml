@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Burial Predictions";
 }
-
+@model BoneData
 <div class="text-center">
     <div class="mx-scrollcontainer-top">
         <img class="mx-image mx-name-image1 img-responsive" src="~/img/EgyptPic.jpg" role="presentation" width="100%" border="0">
@@ -10,4 +10,157 @@
     <p>
         Here, input data to have our trained model predict the sex of the person buried
     </p>
+    
+    <script >
+        async function CallAPI() {
+            // create a JSON object
+            var json = {
+                squarenorthsouth: 180,
+                depth: 1.80,
+                squareeastwest: 30,
+                westtohead: 2.05,
+                length: 1.8,
+                westtofeet: 2.8,
+                southtofeet: 1.9,
+                east_west_E: 1,
+                east_west_W: 0,
+                adults_be_adults_A: 1,
+                adults_be_adults_C: 0,
+                area_NE: 1,
+                area_NNW: 0,
+                area_NW: 0,
+                area_SE: 0,
+                area_SW: 0
+            };
+
+            // serialize the JSON object to a string
+            var jsonString = JSON.stringify(json);
+
+            try {
+                // send the POST request to the URL
+                const response = await fetch("https://localhost:44381/score", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: jsonString
+                });
+
+                // get the response content as a string
+                var responseString = await response.text();
+
+                // do something with the response
+                console.log(responseString);
+
+                let trimmedString = responseString.substring(19, responseString.length - 2);
+                //console.log(trimmedString);
+
+                document.getElementById("response").innerHTML = trimmedString
+            } catch (error) {
+                // handle the exception
+                console.error(error);
+            }
+        }
+
+
+    </script>
+
+    <button onclick="CallAPI()">CALL IT NOW</button>
+    <br />
+    <p id="response"></p>
+
+    @*<form method="post" asp-controller="Api" asp-action="Score">
+
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <h4>.....</h4>
+
+            <h4>Measurements</h4>
+
+            <div class="form-group">
+                <label asp-for="squarenorthsouth">Square North to South</label>
+                <input asp-for="squarenorthsouth" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="depth">Burial Depth</label>
+                <input asp-for="depth" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="squareeastwest">Square East to West</label>
+                <input asp-for="squareeastwest" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="westtohead">westtohead</label>
+                <input asp-for="westtohead" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="length">Mummy Length</label>
+                <input asp-for="length" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="westtofeet">westtofeet</label>
+                <input asp-for="westtofeet" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="southtofeet">southtofeet</label>
+                <input asp-for="southtofeet" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="east_west_E">east_west_E</label>
+                <input asp-for="east_west_E" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="east_west_W">east_west_W</label>
+                <input asp-for="east_west_W" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="adults_be_adults_A">adults_be_adults_A</label>
+                <input asp-for="adults_be_adults_A" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="adults_be_adults_C">adults_be_adults_C</label>
+                <input asp-for="adults_be_adults_C" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label>Area Direction</label>
+                <select>
+                    <option value="area_NE">area_NE</option>
+                    <option value="area_NNW">area_NNW</option>
+                    <option value="area_NW">area_NW</option>
+                    <option value="area_SE">area_SE</option>
+                    <option value="area_SE">area_SW</option>
+                </select>
+            </div>
+
+            <div class="float-end">
+                <input class="btn btn-primary" type="submit" value="Make Prediction" />
+            </div>
+        </form>*@
 </div>
+
+@*"squarenorthsouth": 180,
+    "depth": 1.80,
+    "squareeastwest": 30,
+    "westtohead": 2.05,
+    "length": 1.8,
+    "westtofeet": 2.8,
+    "southtofeet": 1.9,
+    "east_west_E": 1,
+    "east_west_W": 0,
+    "adults_be_adults_A": 1,
+    "adults_be_adults_C": 0,
+    "area_NE": 1,
+    "area_NNW": 0,
+    "area_NW": 0,
+    "area_SE": 0,
+    "area_SW": 0*@
