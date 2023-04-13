@@ -8,5 +8,7 @@ namespace IntexMummy11.Models
     public interface IBurialRepository
     {
         IQueryable<Burialmain> Burials { get; }
+
+        IQueryable<Minitable> Data { get; }
     }
 }

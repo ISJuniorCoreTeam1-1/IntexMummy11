@@ -28,6 +28,11 @@ namespace IntexMummy11.Controllers
             return View();
         }
 
+        public IActionResult AcceptCookies()
+        {
+            Response.Cookies.Append("AcceptedCookies", "true");
+            return RedirectToAction(nameof(Index)); // or any other action you want to redirect to
+        }
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

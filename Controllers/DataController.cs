@@ -19,16 +19,29 @@ namespace IntexMummy11.Controllers
             repo = temp;
         }
 
-        public IActionResult BurialList()
+        public IActionResult BurialList(string sex, int pageNum=1)
         {
-            var x = new BurialViewModel
+            int pageSize = 40;
+            var x = new MinitableViewModel
             {
-                Burials = repo.Burials
-                /*.Where(b => b.Category == catergoryName || catergoryName == null)
-                .OrderBy(b => b.Title)
-                .Skip((pageNum - 1) * pageSize)*/
+                Data = repo.Data
+                .Where(s=> s.Sex == sex || sex==null)
+                .Skip((pageNum - 1) * pageSize)
+                .Take(pageSize),
+
+                PageInfo = new PageInfo
+                {
+                    TotalNumBurials =
+                    (sex == null ? 
+                    repo.Data.Count() :
+                    repo.Data.Where(x => x.Sex == sex).Count()),
+                    BurialsPerPage = pageSize,
+                    CurrentPage = pageNum
+                }
             };
+
             return View(x);
+            
         }
 
         public IActionResult BurialPredictions()
@@ -38,7 +51,14 @@ namespace IntexMummy11.Controllers
 
         public IActionResult BurialInsights()
         {
-            return View();
+            var x = new BurialViewModel
+            {
+                Burials = repo.Burials
+                /*.Where(b => b.Category == catergoryName || catergoryName == null)
+                .OrderBy(b => b.Title)
+                .Skip((pageNum - 1) * pageSize)*/
+            };
+            return View(x);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

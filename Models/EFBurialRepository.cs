@@ -16,5 +16,7 @@ namespace IntexMummy11.Models
 
         public IQueryable<Burialmain> Burials => context.Burialmain;
 
+        public IQueryable<Minitable> Data => context.Data;
+
     }
 }

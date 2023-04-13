@@ -56,6 +56,8 @@ namespace IntexMummy11
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+
+
             services.AddDefaultIdentity<IdentityUser>(options =>
             {
                 //Password requirements
@@ -70,6 +72,8 @@ namespace IntexMummy11
                 .AddErrorDescriber<CustomIdentityErrorDescriber>()
                 .AddEntityFrameworkStores<PostgreSqlContext>();
 
+            //Add authorize to get roles
+            services.AddAuthorization();
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -80,6 +84,8 @@ namespace IntexMummy11
             services.AddControllersWithViews();
 
             services.AddRazorPages();
+            services.AddDistributedMemoryCache();
+            services.AddSession();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<InferenceSession>(
                 new InferenceSession("./INTEXFINAL4.onnx")
@@ -104,18 +110,25 @@ namespace IntexMummy11
 
             //Redirect HTTP traffic HTTPS
             app.UseHttpsRedirection();
+            app.UseCookiePolicy();
             app.UseStaticFiles();
+            app.UseSession();
+
 
             //Content Security Policy Header
             app.Use(async (ctx, next) =>
             {
-                string cspValue = "default-src 'self'; style-src 'self'; img-src 'self'; script-src 'self'";
+                string cspValue =
+                    "default-src 'self';" +
+                    "style-src 'self' 'sha256-aqNNdDLnnrDOnTNdkJpYlAxKVJtLt9CtFLklmInuUAE=';" +
+                    "img-src 'self' data:;" +
+                    "script-src 'self' 'sha256-m1igTNlg9PL5o60ru2HIIK6OPQet2z9UgiEAhCyg/RU='";
+
                 ctx.Response.Headers.TryAdd("Content-Security-Policy", cspValue);
                 await next();
             });
 
 
-            app.UseCookiePolicy();
 
             app.UseRouting();
 
@@ -127,6 +140,23 @@ namespace IntexMummy11
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
+                    "filteringpage",
+                    "{filtering}/Page{pageNum}",
+                    new { Controller = "Data", action = "BurialList" });
+
+                endpoints.MapControllerRoute(
+                   name: "Paging",
+                   pattern: "BurialList/Page{pageNum}",
+                   defaults: new { Controller = "Data", action = "BurialList", pageNum = 1 });
+
+                endpoints.MapControllerRoute(
+                    "filtering",
+                    "{filtering}",
+                    new { Controller = "Data", action = "BurialList", pageNum = 1 });
+
+                endpoints.MapDefaultControllerRoute();
                 endpoints.MapRazorPages();
             });
         }
