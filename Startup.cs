@@ -55,6 +55,8 @@ namespace IntexMummy11
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+
+
             services.AddDefaultIdentity<IdentityUser>(options =>
             {
                 //Password requirements
@@ -69,6 +71,8 @@ namespace IntexMummy11
                 .AddErrorDescriber<CustomIdentityErrorDescriber>()
                 .AddEntityFrameworkStores<PostgreSqlContext>();
 
+            //Add authorize to get roles
+            services.AddAuthorization();
 
             services.Configure<IdentityOptions>(options =>
             {
