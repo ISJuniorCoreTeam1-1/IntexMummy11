@@ -19,10 +19,88 @@
     </div>
 </div>
 <div>
-    <div class="row m-1 p-1">
+    @*<div class="row m-1 p-1">
         <vc:filtering></vc:filtering>
+    </div>*@
+    <div>
+        <form method="post">
+            <label asp-for="SexFilter" type="hidden">Sex:</label>
+            <select asp-for="SexFilter">
+                <option value="">Any Sex</option>
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+            </select>
+            <br />
+            <label asp-for="AgeFilter" type="hidden">Age:</label>
+            <select asp-for="AgeFilter">
+                <option value="">Any Age</option>
+                <option value="A">Adult (year 15+)</option>
+                <option value="C">Child (years 3-15)</option>
+                <option value="I">Infant (years 1-3)</option>
+                <option value="N">Newborn (year 0-1)</option>
+                <option value="U">Unknown</option>
+            </select>
+            <br />
+            <label asp-for="TextileColorFilter" type="hidden">Textile Color:</label>
+            <input asp-for="TextileColorFilter" />
+            <br />
+            <label asp-for="TextileStructureFilter" type="hidden">Textile Structure:</label>
+            <input asp-for="TextileStructureFilter" />
+            <br />
+            <label asp-for="BurialDepthFilterMin" type="hidden">Burial Depth Min:</label>
+            <input asp-for="BurialDepthFilterMin" type="number" step="0.01" value="0">
+            <label asp-for="BurialDepthFilterMax" type="hidden">Burial Depth Max:</label>
+            <input asp-for="BurialDepthFilterMax" type="number" step="0.01" value="5">
+            <br />
+            <label asp-for="TextileFunctionFilter" type="hidden">Textile Function:</label>
+            <input asp-for="TextileFunctionFilter" />
+            <br />
+            <label asp-for="HairColorFilter" type="hidden">Hair Color:</label>
+            <select asp-for="HairColorFilter">
+                <option value="">Any Hair Color</option>
+                <option value="B">Brown/Dark Brown/Lt Brown</option>
+                <option value="K">Black</option>
+                <option value="A">Brown-Red</option>
+                <option value="R">Red/Red-Bl</option>
+                <option value="D">Blond</option>
+                <option value="U">Unknown</option>
+            </select>
+            <br />
+            <label asp-for="EstimatedStatureFilter" type="hidden">Estimated Stature:</label>
+            <input asp-for="EstimatedStatureFilter" />
+            <br />
+            <label asp-for="HeadDirectionFilter" type="hidden">Head Direction:</label>
+            <select asp-for="HeadDirectionFilter">
+                <option value="">Any Head Direction</option>
+                <option value="N">North</option>
+                <option value="S">South</option>
+                <option value="E">East</option>
+                <option value="W">West</option>
+            </select>
+            <br />
+            <label asp-for="BurialWrappingFilter" type="hidden">Hair Color:</label>
+            <select asp-for="BurialWrappingFilter">
+                <option value="">Any Burial Wrapping</option>
+                <option value="W">Full or nearly full wrapping remains</option>
+                <option value="H">Partial wrapping remain</option>
+                <option value="B">Bones and/or only partial remnants of wrapping remains</option>
+                <option value="U">Unknown</option>
+            </select>
+            <br />
+            <label asp-for="FaceBundleFilter" type="hidden">Face Bundle:</label>
+            <select asp-for="FaceBundleFilter">
+                <option value="">Select</option>
+                <option value="Y">Yes</option>
+                <option>No</option>
+            </select>
+            <br />
+
+
+
+
+            <button type="submit">Add Filters</button>
+        </form>
     </div>
-    
 
     <table class="table table-bordered table-striped table-hover col-10">
         <thead>
