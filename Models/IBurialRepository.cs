@@ -9,6 +9,6 @@ namespace IntexMummy11.Models
     {
         IQueryable<Burialmain> Burials { get; }
 
-        IQueryable<Megatable> Data { get; }
+        IQueryable<Minitable> Data { get; }
     }
 }
