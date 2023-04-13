@@ -14,21 +14,6 @@
         Or our awesome data
     </p>
 
-    <table class="table table-bordered table-striped table-hover">
-        <thead>
-            <tr>
-                <th>Head Direction</th>
-                <th>Depth</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (Burialmain b in Model.Burials)
-            {
-                <tr>
-                    <td>@b.Headdirection</td>
-                    <td>@b.Depth</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <h1>Unsupervised Heat Map</h1>
+    <img src="~/img/Screen Shot 2023-04-13 at 4.04.34 PM.png" alt="Burial Heat Map" width="650" height="500"/>
 </div>
