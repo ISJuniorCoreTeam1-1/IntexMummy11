@@ -21,7 +21,9 @@ namespace IntexMummy11.Models.ViewModels
         public string HeadDirectionFilter { get; set; }
         public string BurialWrappingFilter { get; set; }
         public string FaceBundleFilter { get; set; }
+        public long BurialIDForDescription { get; set; }
         
+
 
 
     }

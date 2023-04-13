@@ -20,7 +20,7 @@ namespace IntexMummy11.Controllers
         }
 
         [HttpGet]
-        public IActionResult BurialList(string sex, int pageNum=1)
+        public IActionResult BurialList(int pageNum=1)
         {
             int pageSize = 50;
             var x = new MinitableViewModel
@@ -52,7 +52,7 @@ namespace IntexMummy11.Controllers
             {
                 Data = repo.Data
                 .Where(s => s.Sex == mtvm.SexFilter || mtvm.SexFilter == null)
-                .Where(a => a.Adultsubadult == mtvm.AgeFilter || mtvm.AgeFilter == null)
+                .Where(a => a.Ageatdeath == mtvm.AgeFilter || mtvm.AgeFilter == null)
                 .Where(c => c.ColorValue.Contains("/" + mtvm.TextileColorFilter + "/") || mtvm.TextileColorFilter == null)
                 .Where(dmin => Convert.ToDecimal(dmin.Depth) >= Convert.ToDecimal(mtvm.BurialDepthFilterMin))
                 .Where(dmax => Convert.ToDecimal(dmax.Depth) <= Convert.ToDecimal(mtvm.BurialDepthFilterMax))
@@ -72,7 +72,7 @@ namespace IntexMummy11.Controllers
                     (mtvm.SexFilter == null && mtvm.AgeFilter == null && mtvm.FaceBundleFilter == null && mtvm.TextileColorFilter == null && mtvm.HeadDirectionFilter == null && mtvm.TextileStructureFilter == null && mtvm.TextileFunctionFilter == null && mtvm.HairColorFilter == null && mtvm.BurialWrappingFilter == null && mtvm.EstimatedStatureFilter == null ?
                     repo.Data.Count() :
                     repo.Data.Where(x => x.Sex == mtvm.SexFilter)
-                    .Where(a => a.Adultsubadult == mtvm.AgeFilter)
+                    .Where(a => a.Ageatdeath == mtvm.AgeFilter)
                     .Where(c => c.ColorValue.Contains("/"+ mtvm.TextileColorFilter + "/"))
                     .Where(dmin => Convert.ToDecimal(dmin.Depth) >= Convert.ToDecimal(mtvm.BurialDepthFilterMin))
                     .Where(dmax => Convert.ToDecimal(dmax.Depth) <= Convert.ToDecimal(mtvm.BurialDepthFilterMax))
@@ -129,11 +129,18 @@ namespace IntexMummy11.Controllers
             //Could validate some data here with a post or something.
             if (ModelState.IsValid)
             {
+
+                //Find the next id
+                repo.Burials.Select(col => col.Id).Max();
+                Burialmain lastRecord = repo.Burials.OrderByDescending(col => col.Id).FirstOrDefault();
+                long nextID = lastRecord.Id + 1;
+
+
                 // Set property values from the newlyCreatedBurialMain parameter
                 Burialmain addme = new Burialmain
                 {
 
-                    Id = newlyCreatedBurialMain.Id,
+                    Id = nextID,
                     Squarenorthsouth = newlyCreatedBurialMain.Squarenorthsouth,
                     Headdirection = newlyCreatedBurialMain.Headdirection,
                     Sex = newlyCreatedBurialMain.Sex,
@@ -175,20 +182,49 @@ namespace IntexMummy11.Controllers
                 repo.Add(addme);
                 // Save the changes to the database
                 repo.Save();
-
-
+                
 
 
             }
+            int pageNum = 1;
+            int pageSize = 50;
+            var x = new MinitableViewModel
+            {
+                Data = repo.Data
+                .Skip((pageNum - 1) * pageSize)
+                .Take(pageSize),
+
+                PageInfo = new PageInfo
+                {
+                    TotalNumBurials =
+                    repo.Data.Count(),
+                    BurialsPerPage = pageSize,
+                    CurrentPage = pageNum
+                }
+            };
 
 
 
 
 
 
-            return View("BurialList");
+            return View("BurialList",x);
 
         }
+
+        [HttpPost]
+        public IActionResult BurialDetails(long BurialIDForDescription)
+        {
+            var x = new MinitableViewModel
+            {
+                Data = repo.Data
+                .Where(x => x.Burialmainid == BurialIDForDescription)
+            };
+
+            return View(x);
+
+        }
+
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

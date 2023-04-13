@@ -24,7 +24,7 @@
             <vc:filtering></vc:filtering>
         </div>*@
 
-    <div  >
+    <div>
         <form method="post">
             <label asp-for="SexFilter" type="hidden">Sex:</label>
             <select asp-for="SexFilter">
@@ -100,7 +100,7 @@
 
 
 
-            <button type="submit">Add Filters</button>
+            <button type="submit">Apply Filters</button>
         </form>
     </div>
 
@@ -114,21 +114,33 @@
                 <th>Wrapping</th>
                 <th>Age</th>
                 <th>Excavation Year</th>
+                <th>Details</th>
             </tr>
         </thead>
         <tbody>
             @foreach (Minitable m in Model.Data)
             {
-                <tr>
-                    <td>@m.Burialmainid</td>
-                    <td>@m.Headdirection</td>
-                    <td>@m.Depth</td>
-                    <td>@m.Text</td>
-                    <td>@m.Wrapping</td>
-                    <td>@m.Adultsubadult</td>
-                    <td>@m.Fieldbookexcavationyear</td>
+            <tr>
+                <td>@m.Burialmainid</td>
+                <td>@m.Headdirection</td>
+                <td>@m.Depth</td>
+                <td>@m.Text</td>
+                <td>@m.Wrapping</td>
+                <td>@m.Adultsubadult</td>
+                <td>@m.Fieldbookexcavationyear</td>
+                <td>
+                    <form method="post" asp-page="/Description" class="form-check-inline">
+                        <input type="hidden" asp-for="@Model.BurialIDForDescription" value="@m.Burialmainid"/>
+                        @*<input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />*@
+                        <span class="card-text">
+                            <button type="submit" class="btn btn-success btn-sm float-end" asp-controller="Data" asp-action="BurialDetails">View Details</button>
 
-                </tr>
+                        </span>
+
+                    </form>
+                </td>
+
+            </tr>
             }
         </tbody>
     </table>

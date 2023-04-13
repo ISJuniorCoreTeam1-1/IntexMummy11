@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Burial Details";
+}
+@model IntexMummy11.Models.ViewModels.MinitableViewModel
+
+<div class="text-center">
+    <div class="mx-scrollcontainer-top">
+        <img class="mx-image mx-name-image1 img-responsive" src="~/img/EgyptPic.jpg" role="presentation" width="100%" border="0">
+    </div>
+</div>
+<div class="bg-dark text-white p-2">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col navbar-brand">Burial Data</div>
+            <a asp-action="CreateBurialMain"> <div class="col float-right btn-outline-light navbar-brand">  Add record </div> </a>
+        </div>
+    </div>
+</div>
+
+
+<div class="card card-outline-primary m-1 p-1">
+    <form method="post" asp-page="/Description" class="form-check-inline">
+        <span class="card-text">
+            <button type="submit" class="btn btn-success btn-sm float-end" asp-controller="Data" asp-action="BurialList">Back to Burials</button>
+        </span>
+    </form>
+</div>
+    
+<div>
+
+    @foreach (Minitable m in Model.Data)
+    {
+    <div class="card card-outline-primary m-1 p-1">
+        <div class="bg-light p-1">
+            <div class="card-text p-1" style="border: 20px solid black; padding: 20px;">
+                <ul>
+                    <lh class="font-weight-bold">Burial ID: @m.Burialmainid</lh>
+                    <li>Description:@m.Description</li>
+                    <li>Sex: @m.Sex</li>
+                    <li>Age: @m.Ageatdeath</li>
+                    <li>Head Direction: @m.Headdirection</li>
+                    <li>Depth:@m.Depth</li>
+                    <li>Text: @m.Text</li>
+                    <li>Text: @m.Length</li>
+                    <li>Square East/West: @m.Squareeastwest</li>
+                    <li>Square North/South: @m.Squarenorthsouth @m.Northsouth</li>
+                    <li>South to Head: @m.Southtohead</li>
+                    <li>South to Feet: @m.Southtofeet</li>
+                    <li>Wrapping: @m.Wrapping</li>
+                    <li>Hair Color: @m.Haircolor</li>
+                    <li>Area: @m.Area</li>
+                    <li>Length: @m.Length</li>
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    }
+</div>
