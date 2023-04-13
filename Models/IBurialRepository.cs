@@ -10,5 +10,8 @@ namespace IntexMummy11.Models
         IQueryable<Burialmain> Burials { get; }
 
         IQueryable<Minitable> Data { get; }
+
+        void Add(Burialmain burial);
+        void Save();
     }
 }
