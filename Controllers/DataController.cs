@@ -19,22 +19,20 @@ namespace IntexMummy11.Controllers
             repo = temp;
         }
 
+        [HttpGet]
         public IActionResult BurialList(string sex, int pageNum=1)
         {
-            int pageSize = 40;
+            int pageSize = 50;
             var x = new MinitableViewModel
             {
                 Data = repo.Data
-                .Where(s=> s.Sex == sex || sex==null)
                 .Skip((pageNum - 1) * pageSize)
                 .Take(pageSize),
 
                 PageInfo = new PageInfo
                 {
                     TotalNumBurials =
-                    (sex == null ? 
-                    repo.Data.Count() :
-                    repo.Data.Where(x => x.Sex == sex).Count()),
+                    repo.Data.Count(),
                     BurialsPerPage = pageSize,
                     CurrentPage = pageNum
                 }
@@ -42,6 +40,57 @@ namespace IntexMummy11.Controllers
 
             return View(x);
             
+        }
+
+
+        [HttpPost]
+        public IActionResult BurialList(MinitableViewModel mtvm, int pageNum = 1)
+        {
+            int pageSize = 50;
+            
+            var x = new MinitableViewModel
+            {
+                Data = repo.Data
+                .Where(s => s.Sex == mtvm.SexFilter || mtvm.SexFilter == null)
+                .Where(a => a.Adultsubadult == mtvm.AgeFilter || mtvm.AgeFilter == null)
+                .Where(c => c.ColorValue.Contains("/" + mtvm.TextileColorFilter + "/") || mtvm.TextileColorFilter == null)
+                .Where(dmin => Convert.ToDecimal(dmin.Depth) >= Convert.ToDecimal(mtvm.BurialDepthFilterMin))
+                .Where(dmax => Convert.ToDecimal(dmax.Depth) <= Convert.ToDecimal(mtvm.BurialDepthFilterMax))
+                .Where(hd => hd.Headdirection == mtvm.HeadDirectionFilter || mtvm.HeadDirectionFilter == null)
+                .Where(ts => ts.TextilefunctionValue.Contains("/" + mtvm.TextileStructureFilter + "/") || mtvm.TextileStructureFilter == null)
+                .Where(tf => tf.TextilefunctionValue.Contains("/" + mtvm.TextileFunctionFilter + "/") || mtvm.TextileFunctionFilter == null)
+                .Where(hc => hc.Haircolor == mtvm.HairColorFilter || mtvm.HairColorFilter == null)
+                .Where(bw => bw.Wrapping == mtvm.BurialWrappingFilter || mtvm.BurialWrappingFilter == null)
+                .Where(es => es.TextilefunctionValue.Contains("/" + mtvm.EstimatedStatureFilter + "/") || mtvm.EstimatedStatureFilter == null)
+                .Where(fb => fb.Facebundles == mtvm.FaceBundleFilter || mtvm.FaceBundleFilter == null)
+                .Skip((pageNum - 1) * pageSize)
+                .Take(pageSize),
+
+                PageInfo = new PageInfo
+                {
+                    TotalNumBurials =
+                    (mtvm.SexFilter == null && mtvm.AgeFilter == null && mtvm.FaceBundleFilter == null && mtvm.TextileColorFilter == null && mtvm.HeadDirectionFilter == null && mtvm.TextileStructureFilter == null && mtvm.TextileFunctionFilter == null && mtvm.HairColorFilter == null && mtvm.BurialWrappingFilter == null && mtvm.EstimatedStatureFilter == null ?
+                    repo.Data.Count() :
+                    repo.Data.Where(x => x.Sex == mtvm.SexFilter)
+                    .Where(a => a.Adultsubadult == mtvm.AgeFilter)
+                    .Where(c => c.ColorValue.Contains("/"+ mtvm.TextileColorFilter + "/"))
+                    .Where(dmin => Convert.ToDecimal(dmin.Depth) >= Convert.ToDecimal(mtvm.BurialDepthFilterMin))
+                    .Where(dmax => Convert.ToDecimal(dmax.Depth) <= Convert.ToDecimal(mtvm.BurialDepthFilterMax))
+                    .Where(hd => hd.Headdirection == mtvm.HeadDirectionFilter)
+                    .Where(ts => ts.TextilefunctionValue.Contains("/" + mtvm.TextileStructureFilter + "/"))
+                    .Where(tf => tf.TextilefunctionValue.Contains("/" + mtvm.TextileFunctionFilter + "/"))
+                    .Where(hc => hc.Haircolor == mtvm.HairColorFilter)
+                    .Where(bw => bw.Wrapping == mtvm.BurialWrappingFilter)
+                    .Where(tf => tf.TextilefunctionValue.Contains("/" + mtvm.EstimatedStatureFilter + "/"))
+                    .Where(fb => fb.Facebundles == mtvm.FaceBundleFilter)
+                    .Count()),
+                    BurialsPerPage = pageSize,
+                    CurrentPage = pageNum
+                }
+            };
+
+            return View(x);
+
         }
 
         public IActionResult BurialPredictions()
@@ -60,6 +109,87 @@ namespace IntexMummy11.Controllers
             };
             return View(x);
         }
+
+        //Creating Burial Main record
+        [HttpGet]
+        public IActionResult CreateBurialMain()
+        {
+            //Create a new BurialMain record and pass it to  the view to add it
+
+            return View(new Burialmain());
+
+        }
+
+
+        [HttpPost]
+        public IActionResult CreateBurialMain(Burialmain newlyCreatedBurialMain)
+        {
+            //Create a new BurialMain record and pass it to  the view to add it
+
+            //Could validate some data here with a post or something.
+            if (ModelState.IsValid)
+            {
+                // Set property values from the newlyCreatedBurialMain parameter
+                Burialmain addme = new Burialmain
+                {
+
+                    Id = newlyCreatedBurialMain.Id,
+                    Squarenorthsouth = newlyCreatedBurialMain.Squarenorthsouth,
+                    Headdirection = newlyCreatedBurialMain.Headdirection,
+                    Sex = newlyCreatedBurialMain.Sex,
+                    Northsouth = newlyCreatedBurialMain.Northsouth,
+                    Depth = newlyCreatedBurialMain.Depth,
+                    Eastwest = newlyCreatedBurialMain.Eastwest,
+                    Adultsubadult = newlyCreatedBurialMain.Adultsubadult,
+                    Facebundles = newlyCreatedBurialMain.Facebundles,
+                    Southtohead = newlyCreatedBurialMain.Southtohead,
+                    Preservation = newlyCreatedBurialMain.Preservation,
+                    Fieldbookpage = newlyCreatedBurialMain.Fieldbookpage,
+                    Squareeastwest = newlyCreatedBurialMain.Squareeastwest,
+                    Goods = newlyCreatedBurialMain.Goods,
+                    Text = newlyCreatedBurialMain.Text,
+                    Wrapping = newlyCreatedBurialMain.Wrapping,
+                    Haircolor = newlyCreatedBurialMain.Haircolor,
+                    Westtohead = newlyCreatedBurialMain.Westtohead,
+                    Samplescollected = newlyCreatedBurialMain.Samplescollected,
+                    Area = newlyCreatedBurialMain.Area,
+                    Burialid = newlyCreatedBurialMain.Burialid, //May be null
+                    Length = newlyCreatedBurialMain.Length,
+                    Burialnumber = newlyCreatedBurialMain.Burialnumber,
+                    Dataexpertinitials = newlyCreatedBurialMain.Dataexpertinitials,
+                    Westtofeet = newlyCreatedBurialMain.Westtofeet,
+                    Ageatdeath = newlyCreatedBurialMain.Ageatdeath,
+                    Southtofeet = newlyCreatedBurialMain.Southtofeet,
+                    Excavationrecorder = newlyCreatedBurialMain.Excavationrecorder,
+                    Photos = newlyCreatedBurialMain.Photos,
+                    Hair = newlyCreatedBurialMain.Hair,
+                    Burialmaterials = newlyCreatedBurialMain.Burialmaterials,
+                    Dateofexcavation = newlyCreatedBurialMain.Dateofexcavation, //Datetime type // may be null
+                    Fieldbookexcavationyear = newlyCreatedBurialMain.Fieldbookexcavationyear,
+                    Clusternumber = newlyCreatedBurialMain.Clusternumber,
+                    Shaftnumber = newlyCreatedBurialMain.Shaftnumber
+                };
+
+
+                // Add the new object to the database context
+                repo.Add(addme);
+                // Save the changes to the database
+                repo.Save();
+
+
+
+
+            }
+
+
+
+
+
+
+            return View("BurialList");
+
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

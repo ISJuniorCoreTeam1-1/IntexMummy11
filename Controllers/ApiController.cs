@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace IntexMummy11.Controllers
 {
     [ApiController]
-    [Route("/score")]
+    [Route("Api/Score")]
     public class InferenceController : ControllerBase
     {
         private InferenceSession _session;
