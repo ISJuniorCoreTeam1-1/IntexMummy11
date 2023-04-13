@@ -73,6 +73,8 @@
             <input type="number" id="adults_be_adults_C" name="adults_be_adults_C" />
         </div>
 
+        
+
         <div class="form-group">
             <label for="area_NE">area_NE</label>
             <input type="number" id="area_NE" name="area_NE" />
@@ -98,79 +100,14 @@
             <input type="number" id="area_SW" name="area_SW" />
         </div>
 
-        @*<div class="form-group">
-            <label>Area Direction</label>
-            <select>
-                <option value="area_NE">area_NE</option>
-                <option value="area_NNW">area_NNW</option>
-                <option value="area_NW">area_NW</option>
-                <option value="area_SE">area_SE</option>
-                <option value="area_SE">area_SW</option>
-            </select>
-        </div>*@
-
-        <div class="float-end">
-            <input class="btn btn-primary" type="button" onclick="CallAPI()" value="Make Prediction" />
-        </div>
+            <div class="float-end">
+                <input id="btnMakePrediction" class="btn btn-primary" type="button" value="Make Prediction" />
+            </div>
     </form>
 
     <div id="response"></div>
 
 </div>
 <div>
-    <script>
-        async function CallAPI() {
-            // create a JSON object
-            var json = {
-                squarenorthsouth: parseFloat(document.getElementById("squarenorthsouth").value),
-                depth: parseFloat(document.getElementById("depth").value),
-                squareeastwest: parseFloat(document.getElementById("squareeastwest").value),
-                westtohead: parseFloat(document.getElementById("westtohead").value),
-                length: parseFloat(document.getElementById("length").value),
-                westtofeet: parseFloat(document.getElementById("westtofeet").value),
-                southtofeet: parseFloat(document.getElementById("southtofeet").value),
-                east_west_E: parseFloat(document.getElementById("east_west_E").value),
-                east_west_W: parseFloat(document.getElementById("east_west_W").value),
-                adults_be_adults_A: parseFloat(document.getElementById("adults_be_adults_A").value),
-                adults_be_adults_C: parseFloat(document.getElementById("adults_be_adults_C").value),
-                area_NE: parseFloat(document.getElementById("area_NE").value),
-                area_NNW: parseFloat(document.getElementById("area_NNW").value),
-                area_NW: parseFloat(document.getElementById("area_NW").value),
-                area_SE: parseFloat(document.getElementById("area_SE").value),
-                area_SW: parseFloat(document.getElementById("area_SW").value)
-            };
-
-            // serialize the JSON object to a string
-            var jsonString = JSON.stringify(json);
-
-            try {
-                // send the POST request to the URL
-                const response = await fetch("https://localhost:44381/api/score", {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: jsonString
-                });
-
-                // get the response content as a string
-                var responseString = await response.text();
-
-                // do something with the response
-                console.log(responseString);
-
-                let trimmedString = responseString.substring(19, responseString.length - 2);
-                //console.log(trimmedString);
-
-                document.getElementById("response").innerHTML = trimmedString
-            } catch (error) {
-                // handle the exception
-                console.error(error);
-            }
-        }
-
-
-    </script>
-
-   
+    <script src="~/js/site.js"></script>
 </div>
