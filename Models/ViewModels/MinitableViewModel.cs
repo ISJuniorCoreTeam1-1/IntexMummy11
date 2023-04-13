@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace IntexMummy11.Models.ViewModels
 {
-    public class MegatableViewModel
+    public class MinitableViewModel
     {
-        public IQueryable<Megatable> Data { get; set; }
+        public IQueryable<Minitable> Data { get; set; }
+        public PageInfo PageInfo { get; set; }
     }
 }

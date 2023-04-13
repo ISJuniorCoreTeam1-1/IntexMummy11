@@ -78,6 +78,8 @@ namespace IntexMummy11
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddDistributedMemoryCache();
+            services.AddSession();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
@@ -100,6 +102,7 @@ namespace IntexMummy11
             app.UseHttpsRedirection();
             app.UseCookiePolicy();
             app.UseStaticFiles();
+            app.UseSession();
 
 
             //Content Security Policy Header
@@ -127,6 +130,13 @@ namespace IntexMummy11
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
+                   name: "Paging",
+                   pattern: "BurialList/Page{pageNum}",
+                   defaults: new { Controller = "Data", action = "BurialList", pageNum = 1 });
+
+                endpoints.MapDefaultControllerRoute();
                 endpoints.MapRazorPages();
             });
         }
