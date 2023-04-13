@@ -1,0 +1,113 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+<div class="text-center">
+    <div class="mx-scrollcontainer-top">
+        <img class="mx-image mx-name-image1 img-responsive" src="~/img/EgyptPic.jpg" role="presentation" width="100%" border="0">
+    </div>
+    <h3>Add a Burial Record</h3>
+    <p>
+        Currently, we can only add to a single table at a time
+    </p>
+
+    <form id="prediction-form" method="post" asp-controller="Data" asp-action="CreateBurialMain">
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <h4>.....</h4>
+
+        <h4>Measurements</h4>
+
+        <form>
+            <div class="form-group">
+                <label for="id">ID</label>
+                <input type="text" id="id" name="id">
+            </div>
+            <div class="form-group">
+                <label for="squarenorthsouth">Square North to South</label>
+                <input type="text" id="squarenorthsouth" name="squarenorthsouth">
+            </div>
+            <div class="form-group">
+                <label for="headdirection">Head Direction</label>
+                <input type="text" id="headdirection" name="headdirection">
+            </div>
+            <div class="form-group">
+                <label for="sex">Sex</label>
+                <input type="text" id="sex" name="sex">
+            </div>
+            <div class="form-group">
+                <label for="northsouth">North to South</label>
+                <input type="text" id="northsouth" name="northsouth">
+            </div>
+            <div class="form-group">
+                <label for="depth">Depth</label>
+                <input type="text" id="depth" name="depth">
+            </div>
+            <div class="form-group">
+                <label for="eastwest">East to West</label>
+                <input type="text" id="eastwest" name="eastwest">
+            </div>
+            <div class="form-group">
+                <label for="adultsubadult">Adult/Subadult</label>
+                <input type="text" id="adultsubadult" name="adultsubadult">
+            </div>
+            <div class="form-group">
+                <label for="facebundles">Face Bundles</label>
+                <input type="text" id="facebundles" name="facebundles">
+            </div>
+            <div class="form-group">
+                <label for="southtohead">South to Head</label>
+                <input type="text" id="southtohead" name="southtohead">
+            </div>
+            <div class="form-group">
+                <label for="preservation">Preservation</label>
+                <input type="text" id="preservation" name="preservation">
+            </div>
+            <div class="form-group">
+                <label for="fieldbookpage">Field Book Page</label>
+                <input type="text" id="fieldbookpage" name="fieldbookpage">
+            </div>
+            <div class="form-group">
+                <label for="squareeastwest">Square East to West</label>
+                <input type="text" id="squareeastwest" name="squareeastwest">
+            </div>
+            <div class="form-group">
+                <label for="goods">Goods</label>
+                <input type="text" id="goods" name="goods">
+            </div>
+            <div class="form-group">
+                <label for="text">Text</label>
+                <input type="text" id="text" name="text">
+            </div>
+            <div class="form-group">
+                <label for="wrapping">Wrapping</label>
+                <input type="text" id="wrapping" name="wrapping">
+            </div>
+            <div class="form-group">
+                <label for="haircolor">Hair Color</label>
+                <input type="text" id="haircolor" name="haircolor">
+            </div>
+            
+
+                    @*<div class="form-group">
+                        <label>Area Direction</label>
+                        <select>
+                            <option value="area_NE">area_NE</option>
+                            <option value="area_NNW">area_NNW</option>
+                            <option value="area_NW">area_NW</option>
+                            <option value="area_SE">area_SE</option>
+                            <option value="area_SE">area_SW</option>
+                        </select>
+                    </div>*@
+
+                    <div class="float-end">
+                        <input class="btn btn-primary" type="button" onclick="CallAPI()" value="Make Prediction" />
+                    </div>
+        </form>
+
+        <div id="response"></div>
+
+</div>
