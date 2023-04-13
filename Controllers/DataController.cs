@@ -19,19 +19,22 @@ namespace IntexMummy11.Controllers
             repo = temp;
         }
 
-        public IActionResult BurialList(int pageNum=1)
+        public IActionResult BurialList(string sex, int pageNum=1)
         {
             int pageSize = 40;
             var x = new MinitableViewModel
             {
                 Data = repo.Data
+                .Where(s=> s.Sex == sex || sex==null)
                 .Skip((pageNum - 1) * pageSize)
                 .Take(pageSize),
 
                 PageInfo = new PageInfo
                 {
                     TotalNumBurials =
-                    repo.Data.Count(),
+                    (sex == null ? 
+                    repo.Data.Count() :
+                    repo.Data.Where(x => x.Sex == sex).Count()),
                     BurialsPerPage = pageSize,
                     CurrentPage = pageNum
                 }

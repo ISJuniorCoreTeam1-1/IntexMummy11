@@ -1,0 +1,15 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<string>
+
+<div class="d-grid gap-2">
+    <a asp-controller="Data" asp-action="BurialList" asp-route-filtering="" asp-route-pageNum="1" class="btn btn-outline-secondary">Reset Filters</a>
+    @foreach (string c in Model)
+    {
+        <a asp-controller="Data" asp-action="BurialList" asp-route-filtering="@c" asp-route-pageNum="1"
+           class="btn @(ViewBag.Selectedfilter == c ? "btn-primary" : "btn-outline-secondary") btn-outline-secondary">@c</a>
+    }
+</div>

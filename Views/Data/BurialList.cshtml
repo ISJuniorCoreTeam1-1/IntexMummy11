@@ -11,44 +11,48 @@
         Here, view and filter all of the burials in the database to analyze the data.
     </p>
 </div>
-<table class="table table-bordered table-striped table-hover">
-    <thead>
-        <tr>
-            <th>Burial ID</th>
-            <th>Head Direction</th>
-            <th>Depth</th>
-            <th>Text</th>
-            <th>Wrapping</th>
-            <th>Age</th>
-            <th>Excavation Year</th>
-           
+<div class="bg-dark text-white p-2">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col navbar-brand">Burial Data</div>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="row m-1 p-1">
+        <vc:filtering></vc:filtering>
+    </div>
+    
 
+    <table class="table table-bordered table-striped table-hover col-10">
+        <thead>
+            <tr>
+                <th>Burial ID</th>
+                <th>Head Direction</th>
+                <th>Depth</th>
+                <th>Text</th>
+                <th>Wrapping</th>
+                <th>Age</th>
+                <th>Excavation Year</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Minitable m in Model.Data)
+            {
+                <tr>
+                    <td>@m.Burialmainid</td>
+                    <td>@m.Headdirection</td>
+                    <td>@m.Depth</td>
+                    <td>@m.Text</td>
+                    <td>@m.Wrapping</td>
+                    <td>@m.Adultsubadult</td>
+                    <td>@m.Fieldbookexcavationyear</td>
 
-
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (Minitable m in Model.Data)
-        {
-        <tr>
-            <td>@m.Burialmainid</td>
-            <td>@m.Headdirection</td>
-            <td>@m.Depth</td>
-            <td>@m.Text</td>
-            <td>@m.Wrapping</td>
-            <td>@m.Adultsubadult</td>
-            <td>@m.Fieldbookexcavationyear</td>
-
-
-
-
-
-
-
-        </tr>
-        }
-    </tbody>
-</table>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 <div page-blah="@Model.PageInfo" page-action="BurialList" page-classes-enabled="true" page-class="btn" page-class-normal="btn-outline-dark"
      page-class-selected="btn-primary" class="btn-group pull-right m-1">
 </div>

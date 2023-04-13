@@ -132,9 +132,19 @@ namespace IntexMummy11
                     pattern: "{controller=Home}/{action=Index}/{id?}");
 
                 endpoints.MapControllerRoute(
+                    "filteringpage",
+                    "{filtering}/Page{pageNum}",
+                    new { Controller = "Data", action = "BurialList" });
+
+                endpoints.MapControllerRoute(
                    name: "Paging",
                    pattern: "BurialList/Page{pageNum}",
                    defaults: new { Controller = "Data", action = "BurialList", pageNum = 1 });
+
+                endpoints.MapControllerRoute(
+                    "filtering",
+                    "{filtering}",
+                    new { Controller = "Data", action = "BurialList", pageNum = 1 });
 
                 endpoints.MapDefaultControllerRoute();
                 endpoints.MapRazorPages();
