@@ -15,14 +15,16 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col navbar-brand">Burial Data</div>
+            <a asp-action="CreateBurialMain"> <div class="col float-right btn-outline-light navbar-brand">  Add record </div> </a>
         </div>
     </div>
 </div>
 <div>
     @*<div class="row m-1 p-1">
-        <vc:filtering></vc:filtering>
-    </div>*@
-    <div>
+            <vc:filtering></vc:filtering>
+        </div>*@
+
+    <div  >
         <form method="post">
             <label asp-for="SexFilter" type="hidden">Sex:</label>
             <select asp-for="SexFilter">

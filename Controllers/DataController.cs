@@ -110,6 +110,87 @@ namespace IntexMummy11.Controllers
             return View(x);
         }
 
+        //Creating Burial Main record
+        [HttpGet]
+        public IActionResult CreateBurialMain()
+        {
+            //Create a new BurialMain record and pass it to  the view to add it
+
+            return View(new Burialmain());
+
+        }
+
+
+        [HttpPost]
+        public IActionResult CreateBurialMain(Burialmain newlyCreatedBurialMain)
+        {
+            //Create a new BurialMain record and pass it to  the view to add it
+
+            //Could validate some data here with a post or something.
+            if (ModelState.IsValid)
+            {
+                // Set property values from the newlyCreatedBurialMain parameter
+                Burialmain addme = new Burialmain
+                {
+
+                    Id = newlyCreatedBurialMain.Id,
+                    Squarenorthsouth = newlyCreatedBurialMain.Squarenorthsouth,
+                    Headdirection = newlyCreatedBurialMain.Headdirection,
+                    Sex = newlyCreatedBurialMain.Sex,
+                    Northsouth = newlyCreatedBurialMain.Northsouth,
+                    Depth = newlyCreatedBurialMain.Depth,
+                    Eastwest = newlyCreatedBurialMain.Eastwest,
+                    Adultsubadult = newlyCreatedBurialMain.Adultsubadult,
+                    Facebundles = newlyCreatedBurialMain.Facebundles,
+                    Southtohead = newlyCreatedBurialMain.Southtohead,
+                    Preservation = newlyCreatedBurialMain.Preservation,
+                    Fieldbookpage = newlyCreatedBurialMain.Fieldbookpage,
+                    Squareeastwest = newlyCreatedBurialMain.Squareeastwest,
+                    Goods = newlyCreatedBurialMain.Goods,
+                    Text = newlyCreatedBurialMain.Text,
+                    Wrapping = newlyCreatedBurialMain.Wrapping,
+                    Haircolor = newlyCreatedBurialMain.Haircolor,
+                    Westtohead = newlyCreatedBurialMain.Westtohead,
+                    Samplescollected = newlyCreatedBurialMain.Samplescollected,
+                    Area = newlyCreatedBurialMain.Area,
+                    Burialid = newlyCreatedBurialMain.Burialid, //May be null
+                    Length = newlyCreatedBurialMain.Length,
+                    Burialnumber = newlyCreatedBurialMain.Burialnumber,
+                    Dataexpertinitials = newlyCreatedBurialMain.Dataexpertinitials,
+                    Westtofeet = newlyCreatedBurialMain.Westtofeet,
+                    Ageatdeath = newlyCreatedBurialMain.Ageatdeath,
+                    Southtofeet = newlyCreatedBurialMain.Southtofeet,
+                    Excavationrecorder = newlyCreatedBurialMain.Excavationrecorder,
+                    Photos = newlyCreatedBurialMain.Photos,
+                    Hair = newlyCreatedBurialMain.Hair,
+                    Burialmaterials = newlyCreatedBurialMain.Burialmaterials,
+                    Dateofexcavation = newlyCreatedBurialMain.Dateofexcavation, //Datetime type // may be null
+                    Fieldbookexcavationyear = newlyCreatedBurialMain.Fieldbookexcavationyear,
+                    Clusternumber = newlyCreatedBurialMain.Clusternumber,
+                    Shaftnumber = newlyCreatedBurialMain.Shaftnumber
+                };
+
+
+                // Add the new object to the database context
+                repo.Add(addme);
+                // Save the changes to the database
+                repo.Save();
+
+
+
+
+            }
+
+
+
+
+
+
+            return View("BurialList");
+
+        }
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

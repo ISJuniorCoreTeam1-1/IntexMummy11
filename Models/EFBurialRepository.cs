@@ -18,5 +18,14 @@ namespace IntexMummy11.Models
 
         public IQueryable<Minitable> Data => context.Data;
 
+        public void Add(Burialmain burial)
+        {
+            context.Burialmain.Add(burial);
+        }
+
+        public void Save()
+        {
+            context.SaveChanges();
+        }
     }
 }
