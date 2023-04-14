@@ -41,7 +41,16 @@ namespace IntexMummy11
         {
             services.AddScoped<IBurialRepository, EFBurialRepository>();
 
-            var sqlConnectionString = Configuration["ConnectionString"];
+            //var sqlConnectionString = Configuration["ConnectionString"];
+            
+            //Replaced the above line to use environment variables
+            string sqlConnectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
+            if (string.IsNullOrEmpty(sqlConnectionString))
+            {
+                throw new InvalidOperationException("CONNECTION_STRING environment variable not set");
+            }
+
+
             services.AddDbContext<PostgreSqlContext>(options => options.UseNpgsql(sqlConnectionString));
             services.AddDbContext<ebdbContext>(options => options.UseNpgsql(sqlConnectionString));
             
@@ -54,7 +63,9 @@ namespace IntexMummy11
                 options.CheckConsentNeeded = context => true;
                 // requires using Microsoft.AspNetCore.Http;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.ConsentCookie.SecurePolicy = CookieSecurePolicy.Always;
             });
+            
 
 
 
@@ -87,9 +98,21 @@ namespace IntexMummy11
             services.AddDistributedMemoryCache();
             services.AddSession();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddSingleton<InferenceSession>(
-                new InferenceSession("./INTEXFINAL4.onnx")
-);
+
+            //Can't use a path like this, on aws it's different
+            //            services.AddSingleton<InferenceSession>(
+            //                new InferenceSession("./INTEXFINAL4.onnx")
+            //);
+
+            //instead try this
+            //Actually, It had to do with where the onnx file was located, I threw it in the wwwroot folder
+            string onnxFilePath = Environment.GetEnvironmentVariable("ONNX_FILE_PATH");
+            if (string.IsNullOrEmpty(onnxFilePath))
+            {
+                throw new InvalidOperationException("ONNX_FILE_PATH environment variable not set");
+            }
+
+            services.AddSingleton<InferenceSession>(new InferenceSession(onnxFilePath));
         }
     
 
@@ -122,6 +145,7 @@ namespace IntexMummy11
                     "default-src 'self';" +
                     "style-src 'self' 'sha256-aqNNdDLnnrDOnTNdkJpYlAxKVJtLt9CtFLklmInuUAE=';" +
                     "img-src 'self' data:;" +
+                    "connect-src 'self';" +
                     "script-src 'self' 'sha256-m1igTNlg9PL5o60ru2HIIK6OPQet2z9UgiEAhCyg/RU='";
 
                 ctx.Response.Headers.TryAdd("Content-Security-Policy", cspValue);
