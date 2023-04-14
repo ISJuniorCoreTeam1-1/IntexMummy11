@@ -10,9 +10,9 @@
     <div class="mx-scrollcontainer-top">
         <img class="mx-image mx-name-image1 img-responsive" src="~/img/EgyptPic.jpg" role="presentation" width="100%" border="0">
     </div>
-    <h3>Add a Burial Record</h3>
+    <h3>Edit a Burial Record</h3>
     <p>
-        Currently, we can only add to a single table at a time
+        Currently, we can only edit to a single table at a time
     </p>
 
     <form id="prediction-form" method="post" asp-controller="Data" asp-action="SaveEdit">
@@ -24,7 +24,6 @@
 
         <div class="form-group">
             <input type="hidden" asp-for="Id" id="id" name="id" value="@Model.Id">
-            <label type="hidden" asp-for="Id"></label>
         </div>
         <div class="form-group">
             <label asp-for="Squarenorthsouth">Square North to South</label>
