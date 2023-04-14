@@ -23,6 +23,17 @@ namespace IntexMummy11.Models
             context.Burialmain.Add(burial);
         }
 
+        public void Update(Burialmain burial)
+        {
+            context.Burialmain.Update(burial);
+        }
+
+        public void Delete(Burialmain burial)
+        {
+            context.Burialmain.Remove(burial);
+        }
+
+
         public void Save()
         {
             context.SaveChanges();

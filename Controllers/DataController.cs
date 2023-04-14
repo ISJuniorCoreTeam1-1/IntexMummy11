@@ -124,6 +124,16 @@ namespace IntexMummy11.Controllers
 
         }
 
+        [HttpGet]
+        public IActionResult CreateBurialMain2(Burialmain yuh)
+        {
+            //Create a new BurialMain record and pass it to  the view to add it
+
+            return View("CreateBurialMain2", yuh);
+
+        }
+
+
 
         [HttpPost]
         public IActionResult CreateBurialMain(Burialmain newlyCreatedBurialMain)
@@ -229,33 +239,31 @@ namespace IntexMummy11.Controllers
             }
 
             // Pass the BurialMain object to the CreateBurialMain view as the model
-            return View("CreateBurialMain", burialMain);
+            return View("CreateBurialMain2", burialMain);
         }
 
-        //[HttpPost]
-        //public IActionResult Edit(Burialmain yuh)
-        //{
-        //    using (var dbContext = new ebdbContext())
-        //    {
-        //        dbContext.Update(yuh);
-        //        dbContext.SaveChanges();
-        //    }
-        //    return View("BurialList"); 
-        //}
 
 
         [HttpPost]
-        public IActionResult Edit(Burialmain yuh)
+        public IActionResult SaveEdit(Burialmain yuh)
         {
+            if (ModelState.IsValid)
+            {
+                repo.Update(yuh);
+                repo.Save();
 
-            repo.Add(yuh);
-            repo.Save();
-            
-            return View("BurialList");
+                return RedirectToAction("BurialList");
+            }
+
+
+            else
+            {
+                return View("CreateBurialMain2", yuh);
+            }
         }
 
 
-        
+
         [HttpPost]
         public IActionResult BurialDetails(long BurialIDForDescription)
         {

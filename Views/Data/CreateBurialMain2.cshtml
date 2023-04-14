@@ -1,0 +1,182 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model IntexMummy11.Models.Burialmain
+
+<div class="text-center">
+    <div class="mx-scrollcontainer-top">
+        <img class="mx-image mx-name-image1 img-responsive" src="~/img/EgyptPic.jpg" role="presentation" width="100%" border="0">
+    </div>
+    <h3>Add a Burial Record</h3>
+    <p>
+        Currently, we can only add to a single table at a time
+    </p>
+
+    <form id="prediction-form" method="post" asp-controller="Data" asp-action="SaveEdit">
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <h4>.....</h4>
+
+        <h4>Measurements</h4>
+
+        <div class="form-group">
+            <input type="hidden" asp-for="Id" id="id" name="id" value="@Model.Id">
+            <label type="hidden" asp-for="Id"></label>
+        </div>
+        <div class="form-group">
+            <label asp-for="Squarenorthsouth">Square North to South</label>
+            <input asp-for="Squarenorthsouth" type="text" id="squarenorthsouth" name="squarenorthsouth">
+        </div>
+        <div class="form-group">
+            <label asp-for="Headdirection">Head Direction</label>
+            <input asp-for="Headdirection" type="text" id="headdirection" name="headdirection">
+        </div>
+        <div class="form-group">
+            <label asp-for="Sex">Sex</label>
+            <input asp-for="Sex" type="text" id="sex" name="sex">
+        </div>
+        <div class="form-group">
+            <label asp-for="Northsouth">North to South</label>
+            <input asp-for="Northsouth" type="text" id="northsouth" name="northsouth">
+        </div>
+        <div class="form-group">
+            <label asp-for="Depth">Depth</label>
+            <input asp-for="Depth" type="text" id="depth" name="depth">
+        </div>
+        <div class="form-group">
+            <label asp-for="Eastwest">East to West</label>
+            <input asp-for="Eastwest" type="text" id="eastwest" name="eastwest">
+        </div>
+        <div class="form-group">
+            <label asp-for="Adultsubadult">Adult/Subadult</label>
+            <input asp-for="Adultsubadult" type="text" id="adultsubadult" name="adultsubadult">
+        </div>
+        <div class="form-group">
+            <label asp-for="Facebundles">Face Bundles</label>
+            <input asp-for="Facebundles" type="text" id="facebundles" name="facebundles">
+        </div>
+        <div class="form-group">
+            <label asp-for="Southtohead">South to Head</label>
+            <input asp-for="Southtohead" type="text" id="southtohead" name="southtohead">
+        </div>
+        <div class="form-group">
+            <label asp-for="Preservation">Preservation</label>
+            <input asp-for="Preservation" type="text" id="preservation" name="preservation">
+        </div>
+        <div class="form-group">
+            <label asp-for="Fieldbookpage">Field Book Page</label>
+            <input asp-for="Fieldbookpage" type="text" id="fieldbookpage" name="fieldbookpage">
+        </div>
+        <div class="form-group">
+            <label asp-for="Squareeastwest">Square East to West</label>
+            <input asp-for="Squareeastwest" type="text" id="squareeastwest" name="squareeastwest">
+        </div>
+        <div class="form-group">
+            <label asp-for="Goods">Goods</label>
+            <input asp-for="Goods" type="text" id="goods" name="goods">
+        </div>
+        <div class="form-group">
+            <label asp-for="Text">Text</label>
+            <input asp-for="Text" type="text" id="text" name="text">
+        </div>
+        <div class="form-group">
+            <label asp-for="Wrapping">Wrapping</label>
+            <input asp-for="Wrapping" type="text" id="wrapping" name="wrapping">
+        </div>
+        <div class="form-group">
+            <label asp-for="Haircolor">Hair Color</label>
+            <input asp-for="Haircolor" type="text" id="haircolor" name="haircolor">
+        </div>
+        <div class="form-group">
+            <label asp-for="Westtohead">West to Head</label>
+            <input asp-for="Westtohead" id="westtohead" name="westtohead" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Samplescollected">Samples Collected</label>
+            <input asp-for="Samplescollected" id="samplescollected" name="samplescollected" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Area">Area</label>
+            <input asp-for="Area" id="area" name="area" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Burialid">Burial ID</label>
+            <input asp-for="Burialid" id="burialid" name="burialid" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Length">Length</label>
+            <input asp-for="Length" id="length" name="length" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Burialnumber">Burial Number</label>
+            <input asp-for="Burialnumber" id="burialnumber" name="burialnumber" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Dataexpertinitials">Data Expert Initials</label>
+            <input asp-for="Dataexpertinitials" id="dataexpertinitials" name="dataexpertinitials" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Westtofeet">West to Feet</label>
+            <input asp-for="Westtofeet" id="westtofeet" name="westtofeet" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Ageatdeath">Age at Death</label>
+            <input asp-for="Ageatdeath" id="ageatdeath" name="ageatdeath" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Southtofeet">South to Feet</label>
+            <input asp-for="Southtofeet" id="southtofeet" name="southtofeet" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Excavationrecorder">Excavation Recorder</label>
+            <input asp-for="Excavationrecorder" id="excavationrecorder" name="excavationrecorder" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Photos">Photos</label>
+            <input asp-for="Photos" id="photos" name="photos" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Hair">Hair</label>
+            <input asp-for="Hair" id="hair" name="hair" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Burialmaterials">Burial Materials</label>
+            <input asp-for="Burialmaterials" id="burialmaterials" name="burialmaterials" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Dateofexcavation">Date of Excavation</label>
+            <input asp-for="Dateofexcavation" type="date" id="dateofexcavation" name="dateofexcavation" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Fieldbookexcavationyear">Field Book Excavation Year</label>
+            <input asp-for="Fieldbookexcavationyear" id="fieldbookexcavationyear" name="fieldbookexcavationyear" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Clusternumber">Cluster Number</label>
+            <input asp-for="Clusternumber" id="clusternumber" name="clusternumber" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Shaftnumber">Shaft Number</label>
+            <input asp-for="Shaftnumber" id="shaftnumber" name="shaftnumber" />
+        </div>
+
+
+        @*<div class="form-group">
+                <label>Area Direction</label>
+                <select>
+                    <option value="area_NE">area_NE</option>
+                    <option value="area_NNW">area_NNW</option>
+                    <option value="area_NW">area_NW</option>
+                    <option value="area_SE">area_SE</option>
+                    <option value="area_SE">area_SW</option>
+                </select>
+            </div>*@
+
+        <div class="float-end">
+            <button type="submit" class="btn btn-primary">Save Edit</button>
+        </div>
+    </form>
+</div>
