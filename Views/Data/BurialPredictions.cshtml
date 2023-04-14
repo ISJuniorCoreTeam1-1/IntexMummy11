@@ -10,101 +10,98 @@
     <p>
         Here, input data to have our trained model predict the head direction of the person buried
     </p>
+    <p>(For fields that display (1/0), enter 1 for true or 0 for false)</p>
 
     <form id="prediction-form" method="post" asp-controller="Api" asp-action="Score">
-
-        @*<div asp-validation-summary="All" class="text-danger"></div>*@
-        <h4>.....</h4>
+        <h4>..........</h4>
 
         <h4>Measurements</h4>
 
         <div class="form-group">
-            <label for="squarenorthsouth">Square North to South</label>
+            <label for="squarenorthsouth">Square North to South:</label>
             <input id="squarenorthsouth" name="squarenorthsouth" />
         </div>
 
         <div class="form-group">
-            <label for="depth">Burial Depth</label>
+            <label for="depth">Burial Depth:</label>
             <input type="number" id="depth" name="depth" />
         </div>
 
         <div class="form-group">
-            <label for="squareeastwest">Square East to West</label>
+            <label for="squareeastwest">Square East to West:</label>
             <input type="number" id="squareeastwest" name="squareeastwest" />
         </div>
 
         <div class="form-group">
-            <label for="westtohead">westtohead</label>
+            <label for="westtohead">West to Head:</label>
             <input type="number" id="westtohead" name="westtohead" />
         </div>
 
         <div class="form-group">
-            <label for="length">Mummy Length</label>
+            <label for="length">Length:</label>
             <input type="number" id="length" name="length" />
         </div>
 
         <div class="form-group">
-            <label for="westtofeet">westtofeet</label>
+            <label for="westtofeet">West to Feet:</label>
             <input type="number" id="westtofeet" name="westtofeet" />
         </div>
 
         <div class="form-group">
-            <label for="southtofeet">southtofeet</label>
+            <label for="southtofeet">South to Feet:</label>
             <input type="number" id="southtofeet" name="southtofeet" />
         </div>
 
         <div class="form-group">
-            <label for="east_west_E">east_west_E</label>
+            <label for="east_west_E">East(1/0):</label>
             <input type="number" id="east_west_E" name="east_west_E" />
         </div>
 
         <div class="form-group">
-            <label for="east_west_W">east_west_W</label>
+            <label for="east_west_W">West(1/0):</label>
             <input type="number" id="east_west_W" name="east_west_W" />
         </div>
 
         <div class="form-group">
-            <label for="adults_be_adults_A">adults_be_adults_A</label>
+            <label for="adults_be_adults_A">Adult(1/0):</label>
             <input type="number" id="adults_be_adults_A" name="adults_be_adults_A" />
         </div>
 
         <div class="form-group">
-            <label for="adults_be_adults_C">adults_be_adults_C</label>
+            <label for="adults_be_adults_C">Child(1/0):</label>
             <input type="number" id="adults_be_adults_C" name="adults_be_adults_C" />
         </div>
 
-        
-
         <div class="form-group">
-            <label for="area_NE">area_NE</label>
+            <label for="area_NE">Area NE(1/0):</label>
             <input type="number" id="area_NE" name="area_NE" />
         </div>
 
         <div class="form-group">
-            <label for="area_NNW">area_NNW</label>
+            <label for="area_NNW">Area NNW(1/0):</label>
             <input type="number" id="area_NNW" name="area_NNW" />
         </div>
 
         <div class="form-group">
-            <label for="area_NW">area_NW</label>
+            <label for="area_NW">Area NW(1/0):</label>
             <input type="number" id="area_NW" name="area_NW" />
         </div>
 
         <div class="form-group">
-            <label for="area_SE">area_SE</label>
+            <label for="area_SE">Area SE(1/0):</label>
             <input type="number" id="area_SE" name="area_SE" />
         </div>
 
         <div class="form-group">
-            <label for="area_SW">area_SW</label>
+            <label for="area_SW">Area SW(1/0):</label>
             <input type="number" id="area_SW" name="area_SW" />
         </div>
 
-            <div class="float-end">
-                <input id="btnMakePrediction" class="btn btn-primary" type="button" value="Make Prediction" />
-            </div>
+        <div class="float-end">
+            <input id="btnMakePrediction" class="btn btn-primary" type="button" value="Make Prediction" />
+        </div>
     </form>
-
+    <br />
     <div id="response"></div>
 
 </div>

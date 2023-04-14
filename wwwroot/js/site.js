@@ -47,6 +47,14 @@ async function CallAPI() {
         let trimmedString = responseString.substring(19, responseString.length - 2);
         //console.log(trimmedString);
 
+        if (trimmedString == "E") {
+            trimmedString = "Prediction:  East"
+        }
+
+        if (trimmedString == "W") {
+            trimmedString = "Prediction:  West"
+        }
+
         document.getElementById("response").innerHTML = trimmedString
     } catch (error) {
         // handle the exception
