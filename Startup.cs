@@ -23,6 +23,7 @@ using Amazon.SecretsManager;
 using Amazon.SecretsManager.Model;
 
 
+
 namespace IntexMummy11
 {
     public class Startup
@@ -41,7 +42,13 @@ namespace IntexMummy11
         {
             services.AddScoped<IBurialRepository, EFBurialRepository>();
 
-            var sqlConnectionString = Configuration["ConnectionString"];
+
+            string sqlConnectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
+            if (string.IsNullOrEmpty(sqlConnectionString))
+            {
+                throw new InvalidOperationException("CONNECTION_STRING environment variable not set");
+            }
+            //var sqlConnectionString = Configuration["ConnectionString"];
             services.AddDbContext<PostgreSqlContext>(options => options.UseNpgsql(sqlConnectionString));
             services.AddDbContext<ebdbContext>(options => options.UseNpgsql(sqlConnectionString));
             
@@ -89,9 +96,18 @@ namespace IntexMummy11
             services.AddDistributedMemoryCache();
             services.AddSession();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddSingleton<InferenceSession>(
-                new InferenceSession("./INTEXFINAL4.onnx")
-);
+
+            string onnxFilePath = Environment.GetEnvironmentVariable("ONNX_FILE_PATH");
+            if (string.IsNullOrEmpty(onnxFilePath))
+            {
+                throw new InvalidOperationException("ONNX_FILE_PATH environment variable not set");
+            }
+
+            services.AddSingleton<InferenceSession>(new InferenceSession(onnxFilePath));
+
+            //services.AddSingleton<InferenceSession>(
+            //    new InferenceSession("./INTEXFINAL4.onnx")
+            //);
         }
     
 
@@ -117,18 +133,18 @@ namespace IntexMummy11
             app.UseSession();
 
 
-            //Content Security Policy Header
-            app.Use(async (ctx, next) =>
-            {
-                string cspValue =
-                    "default-src 'self';" +
-                    "style-src 'self' 'sha256-aqNNdDLnnrDOnTNdkJpYlAxKVJtLt9CtFLklmInuUAE=';" +
-                    "img-src 'self' data:;" +
-                    "script-src 'self' 'sha256-m1igTNlg9PL5o60ru2HIIK6OPQet2z9UgiEAhCyg/RU='";
+            //Content Security Policy Header // blocked our model, 
+            //app.Use(async (ctx, next) =>
+            //{
+            //    string cspValue =
+            //        "default-src 'self';" +
+            //        "style-src 'self' 'sha256-aqNNdDLnnrDOnTNdkJpYlAxKVJtLt9CtFLklmInuUAE=';" +
+            //        "img-src 'self' data:;" +
+            //        "script-src 'self' 'sha256-m1igTNlg9PL5o60ru2HIIK6OPQet2z9UgiEAhCyg/RU='";
 
-                ctx.Response.Headers.TryAdd("Content-Security-Policy", cspValue);
-                await next();
-            });
+            //    ctx.Response.Headers.TryAdd("Content-Security-Policy", cspValue);
+            //    await next();
+            //});
 
 
 
