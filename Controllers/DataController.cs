@@ -212,7 +212,7 @@ namespace IntexMummy11.Controllers
 
 
 
-            return View("BurialList",x);
+            return RedirectToAction("BurialList");
 
         }
 
