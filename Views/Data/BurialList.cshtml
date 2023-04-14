@@ -16,7 +16,9 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col navbar-brand">Burial Data</div>
+            @if (User.Identity.IsAuthenticated) { 
             <a asp-action="CreateBurialMain"> <div class="col float-right btn-outline-light navbar-brand">  Add record </div> </a>
+            }
         </div>
     </div>
 </div>
@@ -117,8 +119,12 @@
                 <th>Age</th>
                 <th>Excavation Year</th>
                 <th>Details</th>
-                <th>Edit</th>
-                <th>Delete</th>
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <th>Edit</th>
+                    <th>Delete</th>
+                }
             </tr>
         </thead>
         <tbody>
@@ -142,20 +148,23 @@
 
                     </form>
                 </td>
-                <td><a asp-controller="Data" asp-action="Edit" asp-route-burialmainid="@m.Burialmainid">Edit</a></td>
-                <td><a asp-controller="Data" asp-action="Delete" asp-route-id="@m.Burialmainid">Delete</a></td>
-                @*<td><a asp-controller="Data" asp-action="Delete" asp-route-id="@m.Burialmainid">Delete</a></td>*@
-                @*<td>
-                    <form method="get" class="form-check-inline">
-                        <input type="hidden" asp-for="@m.Burialmainid" value="@m.Burialmainid" />
-                        <span class="card-text">
-                            <button type="submit" class="btn btn-success btn-sm float-end" asp-controller="Data" asp-action="Delete">Delete</button>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <td><a asp-controller="Data" asp-action="Edit" asp-route-burialmainid="@m.Burialmainid">Edit</a></td>
+                    <td><a asp-controller="Data" asp-action="Delete" asp-route-id="@m.Burialmainid">Delete</a></td>
+                }
+                    @*<td><a asp-controller="Data" asp-action="Delete" asp-route-id="@m.Burialmainid">Delete</a></td>*@
+                    @*<td>
+                <form method="get" class="form-check-inline">
+                    <input type="hidden" asp-for="@m.Burialmainid" value="@m.Burialmainid" />
+                    <span class="card-text">
+                        <button type="submit" class="btn btn-success btn-sm float-end" asp-controller="Data" asp-action="Delete">Delete</button>
 
-                        </span>
+                    </span>
 
-                    </form>
-                </td>*@
-            </tr>
+                </form>
+            </td>*@
+                </tr>
             }
         </tbody>
     </table>
