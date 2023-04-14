@@ -1,6 +1,8 @@
-﻿using IntexMummy11.Models;
+﻿using IntexMummy11.Data;
+using IntexMummy11.Models;
 using IntexMummy11.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -214,6 +216,46 @@ namespace IntexMummy11.Controllers
 
         }
 
+
+        [HttpGet]
+        public IActionResult Edit(long burialmainid)
+        {
+            // Retrieve the BurialMain record to be edited
+            var burialMain = repo.Burials.Single(b => b.Id == burialmainid);
+            if (burialMain == null)
+            {
+                // Handle case where record is not found
+                return NotFound();
+            }
+
+            // Pass the BurialMain object to the CreateBurialMain view as the model
+            return View("CreateBurialMain", burialMain);
+        }
+
+        //[HttpPost]
+        //public IActionResult Edit(Burialmain yuh)
+        //{
+        //    using (var dbContext = new ebdbContext())
+        //    {
+        //        dbContext.Update(yuh);
+        //        dbContext.SaveChanges();
+        //    }
+        //    return View("BurialList"); 
+        //}
+
+
+        [HttpPost]
+        public IActionResult Edit(Burialmain yuh)
+        {
+
+            repo.Add(yuh);
+            repo.Save();
+            
+            return View("BurialList");
+        }
+
+
+        
         [HttpPost]
         public IActionResult BurialDetails(long BurialIDForDescription)
         {
