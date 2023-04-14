@@ -132,10 +132,20 @@
                 <td>@m.Fieldbookexcavationyear</td>
                 <td>
                     <form method="post" asp-page="/Description" class="form-check-inline">
-                        <input type="hidden" asp-for="@Model.BurialIDForDescription" value="@m.Burialmainid"/>
-                        @*<input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />*@
+                        <input type="hidden" asp-for="@Model.BurialIDForDescription" value="@m.Burialmainid" />
                         <span class="card-text">
                             <button type="submit" class="btn btn-success btn-sm float-end" asp-controller="Data" asp-action="BurialDetails">View Details</button>
+
+                        </span>
+
+                    </form>
+                </td>
+                @*<td><a asp-controller="Data" asp-action="Delete" asp-route-id="@m.Burialmainid">Delete</a></td>*@
+                <td>
+                    <form method="post" class="form-check-inline">
+                        <input type="hidden" asp-for="@Model.Burialidfordelete" value="@m.Burialmainid" />
+                        <span class="card-text">
+                            <button type="submit" class="btn btn-success btn-sm float-end" asp-controller="Data" asp-action="BurialList">Delete</button>
 
                         </span>
 

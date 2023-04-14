@@ -1,0 +1,32 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Delete Movie";
+}
+
+@model IntexMummy11.Models.ViewModels.MinitableViewModel
+
+<h2>Confirm Deletion</h2>
+
+<h3>Are you sure you want to delete the record for the burial with id:</h3>
+<div>
+
+    @foreach (Minitable m in Model.Data)
+    {
+        <div class="card card-outline-primary m-1 p-1">
+            <div class="bg-light p-1">
+                <div class="card-text p-1" style="border: 20px solid black; padding: 20px;">
+                    <ul>
+                        <lh class="font-weight-bold">Burial ID: @m.Burialmainid</lh>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<form method="post" asp-controller="Data" asp-action="Delete">
+    <button type="submit">Delete</button>
+    <a asp-controller="Data" asp-action="BurialList" class="btn btn-primary">Cancel</a>
+    <input type="hidden" asp-for="@Model.Burialidfordelete" />
+</form>

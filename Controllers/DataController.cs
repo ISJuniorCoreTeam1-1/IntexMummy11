@@ -12,6 +12,8 @@ namespace IntexMummy11.Controllers
 {
     public class DataController : Controller
     {
+
+        private ebdbContext ebdbContext { get; set; }
         private IBurialRepository repo;
 
         public DataController(IBurialRepository temp)
@@ -224,6 +226,30 @@ namespace IntexMummy11.Controllers
             return View(x);
 
         }
+
+        [HttpGet]
+        public IActionResult Delete(long Burialidfordelete)
+        {
+            var x = ebdbContext.Data.Single(x => x.Burialmainid == Burialidfordelete);
+
+            return View(x);
+        }
+        [HttpPost]
+        public IActionResult Delete()
+        {
+            /*ebdbContext.Data.Remove(m);*/
+            /*ebdbContext.SaveChanges();*/
+
+            return View("BurialList");
+        }
+        /*[HttpPost]
+        public IActionResult Delete(MinitableViewModel bm)
+        {
+            bm.Data.Remove(bm);
+            ebdbContext.SaveChanges();
+
+            return View("BurialList");
+        }*/
 
 
 
