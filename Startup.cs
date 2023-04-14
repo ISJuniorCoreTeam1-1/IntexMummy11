@@ -134,17 +134,17 @@ namespace IntexMummy11
 
 
             //Content Security Policy Header // blocked our model, 
-            //app.Use(async (ctx, next) =>
-            //{
-            //    string cspValue =
-            //        "default-src 'self';" +
-            //        "style-src 'self' 'sha256-aqNNdDLnnrDOnTNdkJpYlAxKVJtLt9CtFLklmInuUAE=';" +
-            //        "img-src 'self' data:;" +
-            //        "script-src 'self' 'sha256-m1igTNlg9PL5o60ru2HIIK6OPQet2z9UgiEAhCyg/RU='";
+            app.Use(async (ctx, next) =>
+            {
+                string cspValue =
+                    "default-src 'self';" +
+                    "style-src 'self' 'sha256-aqNNdDLnnrDOnTNdkJpYlAxKVJtLt9CtFLklmInuUAE=';" +
+                    "img-src 'self' data:;" +
+                    "script-src 'self' 'sha256-m1igTNlg9PL5o60ru2HIIK6OPQet2z9UgiEAhCyg/RU='";
 
-            //    ctx.Response.Headers.TryAdd("Content-Security-Policy", cspValue);
-            //    await next();
-            //});
+                ctx.Response.Headers.TryAdd("Content-Security-Policy", cspValue);
+                await next();
+            });
 
 
 
