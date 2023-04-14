@@ -22,6 +22,7 @@ namespace IntexMummy11.Models.ViewModels
         public string BurialWrappingFilter { get; set; }
         public string FaceBundleFilter { get; set; }
         public long BurialIDForDescription { get; set; }
+        public long Burialidfordelete { get; set; }
         
 
 

@@ -6,6 +6,7 @@
     <div class="mx-scrollcontainer-top">
         <img class="mx-image mx-name-image1 img-responsive" src="~/img/EgyptPic.jpg" role="presentation" width="100%" border="0">
     </div>
+    <br />
     <h3>Welcome to the Burial List Page</h3>
     <p>
         Here, view and filter all of the burials in the database to analyze the data.
@@ -51,6 +52,7 @@
             <br />
             <label asp-for="BurialDepthFilterMin" type="hidden">Burial Depth Min:</label>
             <input asp-for="BurialDepthFilterMin" type="number" step="0.01" value="0">
+            <br />
             <label asp-for="BurialDepthFilterMax" type="hidden">Burial Depth Max:</label>
             <input asp-for="BurialDepthFilterMax" type="number" step="0.01" value="5">
             <br />
@@ -131,8 +133,7 @@
                 <td>@m.Fieldbookexcavationyear</td>
                 <td>
                     <form method="post" asp-page="/Description" class="form-check-inline">
-                        <input type="hidden" asp-for="@Model.BurialIDForDescription" value="@m.Burialmainid"/>
-                        @*<input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />*@
+                        <input type="hidden" asp-for="@Model.BurialIDForDescription" value="@m.Burialmainid" />
                         <span class="card-text">
                             <button type="submit" class="btn btn-success btn-sm float-end" asp-controller="Data" asp-action="BurialDetails">View Details</button>
 
@@ -141,7 +142,17 @@
                     </form>
                 </td>
                 <td><a asp-controller="Data" asp-action="Edit" asp-route-burialmainid="@m.Burialmainid">Edit</a></td>
+                @*<td><a asp-controller="Data" asp-action="Delete" asp-route-id="@m.Burialmainid">Delete</a></td>*@
+                <td>
+                    <form method="post" class="form-check-inline">
+                        <input type="hidden" asp-for="@Model.Burialidfordelete" value="@m.Burialmainid" />
+                        <span class="card-text">
+                            <button type="submit" class="btn btn-success btn-sm float-end" asp-controller="Data" asp-action="BurialList">Delete</button>
 
+                        </span>
+
+                    </form>
+                </td>
             </tr>
             }
         </tbody>
