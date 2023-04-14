@@ -115,6 +115,7 @@
                 <th>Age</th>
                 <th>Excavation Year</th>
                 <th>Details</th>
+                <th>Edit</th>
             </tr>
         </thead>
         <tbody>
@@ -139,6 +140,7 @@
 
                     </form>
                 </td>
+                <td><a asp-controller="Data" asp-action="Edit" asp-route-burialmainid="@m.Burialmainid">Edit</a></td>
 
             </tr>
             }
