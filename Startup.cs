@@ -54,6 +54,8 @@ namespace IntexMummy11
                 options.CheckConsentNeeded = context => true;
                 // requires using Microsoft.AspNetCore.Http;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.ConsentCookie.SecurePolicy = CookieSecurePolicy.Always;
+
             });
 
 
