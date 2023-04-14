@@ -278,28 +278,19 @@ namespace IntexMummy11.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete(long Burialidfordelete)
+        public IActionResult Delete(long id)
         {
-            var x = ebdbContext.Data.Single(x => x.Burialmainid == Burialidfordelete);
-
+            Burialmain x = repo.Burials.Single(x => x.Id == id);
             return View(x);
         }
         [HttpPost]
-        public IActionResult Delete()
+        public IActionResult DeletePost(long burialid)
         {
-            /*ebdbContext.Data.Remove(m);*/
-            /*ebdbContext.SaveChanges();*/
-
-            return View("BurialList");
+            Burialmain x = repo.Burials.Single(x => x.Id == burialid);
+            repo.Delete(x);
+            repo.Save();
+            return RedirectToAction("BurialList");
         }
-        /*[HttpPost]
-        public IActionResult Delete(MinitableViewModel bm)
-        {
-            bm.Data.Remove(bm);
-            ebdbContext.SaveChanges();
-
-            return View("BurialList");
-        }*/
 
 
 

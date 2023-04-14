@@ -142,17 +142,18 @@
                     </form>
                 </td>
                 <td><a asp-controller="Data" asp-action="Edit" asp-route-burialmainid="@m.Burialmainid">Edit</a></td>
+                <td><a asp-controller="Data" asp-action="Delete" asp-route-id="@m.Burialmainid">Delete</a></td>
                 @*<td><a asp-controller="Data" asp-action="Delete" asp-route-id="@m.Burialmainid">Delete</a></td>*@
-                <td>
-                    <form method="post" class="form-check-inline">
-                        <input type="hidden" asp-for="@Model.Burialidfordelete" value="@m.Burialmainid" />
+                @*<td>
+                    <form method="get" class="form-check-inline">
+                        <input type="hidden" asp-for="@m.Burialmainid" value="@m.Burialmainid" />
                         <span class="card-text">
-                            <button type="submit" class="btn btn-success btn-sm float-end" asp-controller="Data" asp-action="BurialList">Delete</button>
+                            <button type="submit" class="btn btn-success btn-sm float-end" asp-controller="Data" asp-action="Delete">Delete</button>
 
                         </span>
 
                     </form>
-                </td>
+                </td>*@
             </tr>
             }
         </tbody>
